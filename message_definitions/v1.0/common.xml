@@ -395,6 +395,9 @@
                <entry value="159" name="MAV_COMP_ID_QX1_GIMBAL">
                     <description/>
                </entry>
+               <entry value="160" name="MAV_COMP_ID_VIDEO_STREAM">
+                    <description>Used for component that handle video stream commands.</description>
+               </entry>
           </enum>
           <enum name="MAV_SYS_STATUS_SENSOR">
                <description>These encode the sensors whose status is sent as part of the SYS_STATUS message.</description>
@@ -2380,6 +2383,15 @@
                   <description>Static fixed, typically used for base stations</description>
               </entry>
           </enum>
+          <enum name="VIDEO_STREAM_GET_CMD">
+              <description>Commands to be executed in order to get stream information on "VIDEO_STREAM_GET" message "command" field.</description>
+              <entry value="2" name="VIDEO_STREAM_GET_CMD_STREAMS">
+                  <description>Command to get available streams</description>
+              </entry>
+              <entry value="3" name="VIDEO_STREAM_GET_CMD_STREAM_SETTINGS">
+                  <description>Command to get settings of a specific stream</description>
+              </entry>
+          </enum>
      </enums>
      <messages>
           <message id="0" name="HEARTBEAT">
@@ -3937,6 +3949,40 @@
                <field type="uint8_t" name="target_system">system ID of the target</field>
                <field type="uint8_t" name="target_component">component ID of the target</field>
                <field type="uint16_t" name="sequence">sequence number (must match the one in LOGGING_DATA_ACKED)</field>
+          </message>
+          <message id="269" name="VIDEO_STREAM_GET">
+              <description>Message that gets stream information using "VIDEO_STREAM_GET_CMD" commands.</description>
+              <field type="uint8_t" name="target_system">System ID</field>
+              <field type="uint8_t" name="target_component">Component ID</field>
+              <field type="uint8_t" name="id">Video device ID</field>
+              <field type="uint8_t" name="command" enum="VIDEO_STREAM_GET_CMD">Command ID, as defined by VIDEO_STREAM_GET_CMD enum.</field>
+          </message>
+          <message id="270" name="VIDEO_STREAM_URI">
+              <description>Message that returns one stream URI.</description>
+              <field type="uint8_t" name="id">Video device ID. If zero, all video streams will be retrieved</field>
+              <field type="char[30]" name="name">Video stream name</field>
+              <field type="char[100]" name="uri">URI representing the stream</field>
+          </message>
+          <message id="271" name="VIDEO_STREAM_SETTINGS">
+              <description>Message that can be requested by sending the "VIDEO_STREAM_GET_CMD_STREAM_SETTINGS" command on "VIDEO_STREAM_GET" message.</description>
+              <field type="uint8_t" name="id">Video device ID. If zero, all video streams will be retrieved</field>
+              <field type="char[30]" name="name">Video stream name</field>
+              <field type="uint32_t" name="capabilities">Union of device capabilities flags</field>
+              <field type="uint32_t" name="format">Video format set in FourCC</field>
+              <field type="uint32_t[20]" name="available_formats">Video available formats</field>
+              <field type="uint16_t" name="video_resolution_h">Video resolution in pixels horizontal</field>
+              <field type="uint16_t" name="video_resolution_v">Video resolution in pixels vertical</field>
+              <field type="char[100]" name="uri">Video stream URI</field>
+          </message>
+          <message id="272" name="SET_VIDEO_STREAM_SETTINGS">
+              <description>Message that sets stream settings.</description>
+              <field type="uint8_t" name="target_system">System ID</field>
+              <field type="uint8_t" name="target_component">Component ID</field>
+              <field type="uint8_t" name="id">Video device ID</field>
+              <field type="uint32_t" name="format">Video format</field>
+              <field type="uint16_t" name="video_resolution_h">Video resolution in pixels horizontal</field>
+              <field type="uint16_t" name="video_resolution_v">Video resolution in pixels vertical</field>
+              <field type="char[55]" name="mount_path">Video stream mount path to build the URI</field>
           </message>
     </messages>
 </mavlink>
