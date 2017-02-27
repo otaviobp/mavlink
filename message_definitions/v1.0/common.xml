@@ -3854,6 +3854,8 @@
       <field type="uint16_t" name="image_resolution_v">Image resolution in pixels vertical</field>
       <field type="uint16_t" name="video_resolution_h">Video resolution in pixels horizontal</field>
       <field type="uint16_t" name="video_resolution_v">Video resolution in pixels vertical</field>
+      <field type="uint32_t" name="video_bitrate">Video bit rate in bits per second</field>
+      <field type="uint16_t" name="video_rotation">Video image rotation clockwise in degrees</field>
       <field type="uint32_t" name="recording_time_ms">Time in milliseconds since recording started</field>
       <field type="float" name="available_capacity">Available storage capacity in MiB</field>
     </message>
