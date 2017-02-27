@@ -2082,6 +2082,9 @@
       <entry value="8192" name="MAV_PROTOCOL_CAPABILITY_MAVLINK2">
         <description>Autopilot supports mavlink version 2.</description>
       </entry>
+      <entry value="16384" name="MAV_PROTOCOL_CAPABILITY_VIDEO_STREAMING">
+        <description>Autopilot supports video streaming.</description>
+      </entry>
     </enum>
     <enum name="MAV_ESTIMATOR_TYPE">
       <description>Enumeration of estimator types</description>
