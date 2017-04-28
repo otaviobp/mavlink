@@ -1393,22 +1393,17 @@
       <entry value="2502" name="MAV_CMD_VIDEO_START_STREAMING">
         <description>Starts video streaming</description>
         <param index="1">Camera ID (0 for all cameras), 1 for first, 2 for second, etc.</param>
-        <param index="2">Frames per second</param>
-        <param index="3">Resolution horizontal in pixels</param>
-        <param index="4">Resolution vertical in pixels</param>
-        <param index="5">Bit rate in bits/second (0 for auto)</param>
-        <param index="6">Video image rotation clockwise (0-359 degrees)</param>
+        <param index="2">Reserved (all remaining params)</param>
       </entry>
       <entry value="2503" name="MAV_CMD_VIDEO_STOP_STREAMING">
         <description>Stop the current video streaming</description>
         <param index="1">Camera ID</param>
         <param index="2">Reserved</param>
       </entry>
-      <entry value="2504" name="MAV_CMD_REQUEST_VIDEO_STREAM_TARGET">
-        <description>Request video stream target (VIDEO_STREAM_TARGET)</description>
-        <param index="1">1: Request video stream target</param>
-        <param index="2">Camera ID</param>
-        <param index="3">Reserved (all remaining params)</param>
+      <entry value="2504" name="MAV_CMD_REQUEST_VIDEO_STREAM_INFO">
+        <description>Request video stream information (VIDEO_STREAM_INFO)</description>
+        <param index="1">Camera ID</param>
+        <param index="2">Reserved (all remaining params)</param>
       </entry>
       <entry value="2510" name="MAV_CMD_LOGGING_START">
         <description>Request to start streaming logging data over MAVLink (see also LOGGING_DATA message)</description>
@@ -3920,17 +3915,23 @@
       <field type="uint8_t" name="target_component">component ID of the target</field>
       <field type="uint16_t" name="sequence">sequence number (must match the one in LOGGING_DATA_ACKED)</field>
     </message>
-    <message id="269" name="VIDEO_STREAM_TARGET">
+    <message id="269" name="VIDEO_STREAM_INFO">
       <description>Information about a video stream target</description>
       <field type="uint8_t" name="camera_id">Camera ID if there are multiple</field>
-      <field type="char[250]" name="url">Video stream target URL</field>
+      <field type="char[15]" name="url">Video stream supported protocol</field>
+      <field type="char[250]" name="url">Video stream URL, if protocol supports client request using an URL (optional)</field>
     </message>
-    <message id="270" name="SET_VIDEO_STREAM_TARGET">
+    <message id="270" name="SET_VIDEO_STREAM_PARAMS">
       <description>Message that sets the video stream target</description>
       <field type="uint8_t" name="target_system">system ID of the target</field>
       <field type="uint8_t" name="target_component">component ID of the target</field>
       <field type="uint8_t" name="camera_id">Camera ID if there are multiple</field>
-      <field type="char[250]" name="url">Video stream target URL</field>
+      <field type="char[250]" name="url">Video stream target URL (optional)</field>
+      <field type="float" name="fps">Frames per second</field>
+      <field type="uint16_t" name="video_resolution_h">Video resolution in pixels horizontal</field>
+      <field type="uint16_t" name="video_resolution_v">Video resolution in pixels vertical</field>
+      <field type="uint32_t" name="video_bitrate">Video bit rate in bits per second</field>
+      <field type="uint16_t" name="video_rotation">Video image rotation clockwise in degrees</field>
     </message>
   </messages>
 </mavlink>
